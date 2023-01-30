@@ -1,0 +1,49 @@
+@mixin inputStyle {
+    width: 100%;
+    min-height: 48px;
+    border-radius: 6px;
+    padding: 0 16px;
+    border: 1px solid $border-color;
+    font-size: 1.6rem;
+    &:focus-visible {
+        border-color: $color-primary;
+        outline: none;
+    }
+    &.danger {
+        border-color: $color-dander;
+    }
+}
+@mixin labelStyle {
+    font-size: 1.4rem;
+    margin-bottom: 5px;
+    line-height: 1.8rem;
+    font-weight: 500;
+    color: $color-text;
+}
+
+
+// Reponsive
+// media queries
+@mixin MediaQuery($canvas) {
+    @if $canvas == VXS {
+        @media only screen and (max-width: $VXS) {
+            @content;
+        }
+    } @else if $canvas == XS {
+        @media only screen and (max-width: $XS) {
+            @content;
+        }
+    } @else if $canvas == SM {
+        @media only screen and (max-width: $SM) {
+            @content;
+        }
+    } @else if $canvas == MD {
+        @media only screen and (max-width: $MD) {
+            @content;
+        }
+    } @else if $canvas == XL {
+        @media only screen and (max-width: $XL) {
+            @content;
+        }
+    }
+}

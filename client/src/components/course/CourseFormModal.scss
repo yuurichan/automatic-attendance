@@ -1,0 +1,52 @@
+@import "../../stylesSass/variables";
+@import "../../stylesSass/mixin";
+
+.course__form {
+    & .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+        & label {
+            @include labelStyle;
+        }
+        & input {
+            @include inputStyle;
+        }
+        & select {
+            @include inputStyle;
+        }
+        & textarea {
+            @include inputStyle;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            resize: vertical;
+        }
+
+        &--row {
+            justify-content: space-between;
+            flex-direction: row;
+            & .form-group__row {
+                display: flex;
+                flex-direction: column;
+                width: 48%;
+            }
+        }
+    }
+    &-modal {
+        .MuiBackdrop-root.css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop {
+            background-color: rgba($color: #000000, $alpha: 0.3);
+        }
+        .MuiBox-root.css-xqly9z {
+            box-shadow: $box-shadow-1;
+        }
+    }
+
+    @include MediaQuery(SM) {
+        &-modal {          
+            .MuiBox-root.css-xqly9z {
+                box-shadow: $box-shadow-1;
+                width: 90%;
+            }
+        }
+    }
+}

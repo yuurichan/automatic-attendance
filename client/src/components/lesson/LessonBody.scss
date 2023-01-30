@@ -1,0 +1,86 @@
+@import "../../stylesSass/variables";
+@import "../../stylesSass/mixin";
+.lesson__body {
+    padding: 20px;
+    &-control {
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 25px;
+        padding: 16px;
+        min-height: 65px;
+        background-color: $color-white;
+        border-radius: 5px;
+        box-shadow: $box-shadow-1;
+
+        & form {
+            & .form-group {
+                display: flex;
+                align-items: center;
+                height: 46px;
+                margin-right: 20px;
+                position: relative;
+                width: 330px;
+                & input {
+                    position: absolute;
+                    z-index: 9;
+                    width: 100%;
+                    margin-right: 5px;
+                    @include inputStyle;
+                    min-height: 46px;
+                    padding-left: 40px !important;
+                    padding-right: 10px;
+                    font-size: 1.5rem;
+                    color: $color-text;
+                    z-index: 11;
+                }
+                & i {
+                    font-size: 1.8rem;
+                    color: $color-text-secondary;
+                    position: absolute;
+                    z-index: 12;
+                    left: 15px;
+                }
+            }
+        }
+        & .control__wrapper {
+            display: flex;
+            align-items: center;
+        }
+        & .control__my-lesson{
+            font-size: 1.3rem;
+            font-weight: 600;
+            font-family: $font-family-primary !important;
+            margin-right: 5px;
+        }
+    }
+    &-list {
+        & .list__row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -25px;
+        }
+    }
+
+    @include MediaQuery(MD) {
+        &-control {
+            flex-direction: column;
+            & .control__wrapper {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            & form {
+                width: 100%;
+                padding-right: 10px;
+                & .form-group {
+                    width: 100%;                   
+                    & input {
+                        padding-right: 40px !important;
+                    }
+                }
+            }
+        }
+    }
+}

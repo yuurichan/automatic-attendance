@@ -1,0 +1,166 @@
+@import "../stylesSass/variables";
+@import "../stylesSass/mixin";
+
+.dashbroad {
+    &__header {
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        height: $height-top-header;
+        box-shadow: $box-shadow-1;
+        margin-bottom: 2px;
+        position: fixed;
+        width: 100%;
+        background-color: $color-white;
+        z-index: 99;
+        & i {
+            color: rgb(100, 116, 139);
+        }
+    }
+    &__user {
+        display: flex;
+        align-items: center;
+        height: $height-top-user;
+        width: 100%;
+        padding: 0 30px;
+        box-shadow: $box-shadow-1;
+        margin-bottom: 2px;
+        background-color: $color-white;
+        justify-content: space-between;        
+        &-infor {
+            display: flex;
+            align-items: center;
+            & img {
+                width: 60px;
+                height: 60px;
+                object-fit: cover;
+                margin-right: 10px;
+                border-radius: 50%;
+            }
+            & .infor__name {
+                font-size: 3.6rem;
+                font-weight: 600;
+                color: $color-text;
+            }
+
+            & .infor__detail {
+                display: flex;
+                align-items: center;
+                color: #64748b;
+                & i {
+                    font-size: 2rem;
+                    margin-right: 5px;
+                }
+                & span {
+                    font-size: 1.4rem;
+                    line-height: 2rem;
+                }
+            }
+        }
+        &-time {
+            img {
+                width: 40px;
+                object-fit: cover;
+            }
+            & .time__box {
+                display: flex;
+                align-items: center;
+                &-text {
+                    display: flex;
+                    flex-direction: column;
+                    & span {
+                        font-size: 1.4rem;
+                        font-weight: 600;
+                        color: rgb(104, 104, 104);
+                        margin-right: 10px;
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+    &__body {
+        width: 100%;
+        min-height: $height-body;
+        background-color: #f1f5f9;
+        &--xl{
+            min-height: $height-body-xl;
+        }
+        &-box {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            margin-left: -30px;
+            & .box-item {
+                width: calc(25% - 30px);
+                height: 200px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                margin-left: 30px;
+                margin-bottom: 25px;
+                border-radius: 20px;
+                background-color: $color-white;
+                box-shadow: $box-shadow-1;
+                text-decoration: none;
+                & i {
+                    font-size: 7rem;
+                }
+                & h3 {
+                    margin-top: 10px;
+                    font-size: 1.8rem;
+                    font-weight: 600;
+                }
+                &:first-child {
+                    color: #3b82f6;
+                }
+                &:nth-child(2) {
+                    color: #ef4444;
+                }
+                &:nth-child(3) {
+                    color: #f59e0b;
+                }
+                &:nth-child(4) {
+                    color: #22c55e;
+                }
+            }
+        }
+    }
+    @include MediaQuery(MD) {
+        &__body {
+            &-box {
+                & .box-item {
+                    width: calc(50% - 30px);
+                }
+            }
+        }
+    }
+    @include MediaQuery(SM) {
+        &__user {
+            flex-direction: column;
+            padding: 16px 20px;
+            height: 120px;
+            align-items: flex-start;
+            &-infor {
+                & .infor__name {
+                    font-size: 1.6rem;
+                }
+                & img {
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+            &-time {
+                margin-left: auto;
+            }
+        }
+        &__body {
+            &-box {
+                & .box-item {
+                    width: calc(100% - 30px);
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,40 @@
+@import "../../stylesSass/variables";
+@import "../../stylesSass/mixin";
+
+.course-detail {
+    &__body {
+        padding: 30px 100px;
+        & .body__control {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 16px;
+            background-color: $color-white;
+            box-shadow: $box-shadow-1;
+            border-radius: 15px;
+            & h2 {
+                font-size: 2rem;
+            }
+        }
+    }
+
+    @include MediaQuery(MD) {
+        &__body {
+            padding: 20px 50px;
+        }
+    }
+    @include MediaQuery(SM) {
+        &__body {
+            padding: 20px 20px;
+            & .body__control {
+                flex-direction: column;
+                & h2{
+                    font-size: 2.4rem;
+                    color: $color-text;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,38 @@
+@import "../../stylesSass/variables";
+@import "../../stylesSass/mixin";
+
+.MuiCheckbox-colorPrimary {
+    color: $color-primary !important;
+}
+
+.detail__row {
+    &-note {
+        & .note__group {
+            display: flex;
+            align-items: center;         
+            & textarea {
+                @include inputStyle;
+                resize: none;
+                padding: 12px;
+                margin-right: 10px;
+            }
+
+            & button {
+                height: 50px;
+            }
+        }
+    }
+    & .MuiFormGroup-root.css-dmmspl-MuiFormGroup-root {
+        & .css-j204z7-MuiFormControlLabel-root .MuiFormControlLabel-label {
+            font-size: 1.4rem;
+        }
+    }
+
+    @include MediaQuery(MD){
+        &-note {
+            & textarea {
+                width: 150px !important;
+            }
+        }
+    }
+}

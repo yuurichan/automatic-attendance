@@ -1,0 +1,31 @@
+@import "../../../stylesSass/variables";
+tr {
+    & td {
+        height: 65px;
+        font-size: 1.4rem;
+        color: $color-text;
+        &.teacher__tabel {
+            &-id {
+                width: 20%;
+                font-size: 1.2rem;
+                color: #64748b;
+            }
+            &-name{
+                width: 25%;
+            }
+            &-email{
+                width: 25%;
+            }
+            &-created-at{
+                width: 20%;
+            }
+            &-button {
+                width: 10%;
+                & button {
+                    height: 40px;
+                    font-size: 1.4rem;
+                }
+            }
+        }
+    }
+}

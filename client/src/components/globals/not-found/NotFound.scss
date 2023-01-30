@@ -1,0 +1,34 @@
+@import "../../../stylesSass/variables";
+@import "../../../stylesSass/mixin";
+.notfound {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    flex-direction: column;
+    &__image {
+        width: 100%;
+        height: 500px;
+        object-fit: contain;
+        margin-bottom: 20px;
+    }
+    &__heading {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+    &__detail {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+    }
+    &__link {
+        color: $color-primary;
+        font-size: 1.6rem;
+    }
+    
+    @include MediaQuery(SM) {
+        &__image {
+            height: 400px;
+        }
+    }
+}

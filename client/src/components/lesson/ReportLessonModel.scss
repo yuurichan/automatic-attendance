@@ -1,0 +1,31 @@
+@import "../../stylesSass/variables";
+@import "../../stylesSass/mixin";
+
+.lesson-report {
+    &__button {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 20px;
+    }
+
+    &__header {
+        font-size: 1.9rem;
+        color: $color-primary;
+        & span{
+            color: $color-text;
+        }
+    }
+    &__empty{
+        &-img{
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 30px;
+        }
+        &-title{
+            font-size: 1.8rem;
+            color: crimson;
+        }
+    }
+}

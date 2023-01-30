@@ -1,0 +1,242 @@
+@import "../../stylesSass/variables";
+@import "../../stylesSass/mixin";
+
+.lesson__detail {
+    padding: 40px 60px;
+
+    &-card {
+        position: relative;
+        box-shadow: $box-shadow-1;
+        background-color: $color-white;
+        border-radius: 5px;
+        padding: 40px 60px;
+        overflow: hidden;
+
+        & .card__back {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            width: 50px;
+            height: 40px;
+            color: #fff;
+            background-color: $color-primary;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            & i {
+                font-size: 2.4rem;
+            }
+        }
+
+        & .card__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+
+            &-left {
+                width: 45%;
+                display: flex;
+                align-items: center;
+                height: 100px;
+                & .left {
+                    &__logo {
+                        width: 100px;
+                        margin-right: 30px;
+                    }
+                    &__lesson-infor {
+                        padding-left: 30px;
+                        border-left: 1.5px solid #e2e8f0;
+                        & .infor__row {
+                            display: flex;
+                            align-items: center;
+                            margin-bottom: 3px;
+                            & i {
+                                margin-right: 8px;
+                                font-size: 2rem;
+                                color: $color-text-2;
+                            }
+                            & span {
+                                font-size: 1.3rem;
+                                color: $color-text;
+                            }
+                        }
+                    }
+                }
+            }
+            &-right {
+                width: 55%;
+                & .infor__row {
+                    display: flex;
+                    justify-content: center;
+                    margin-bottom: 8px;
+
+                    &-name {
+                        font-size: 2.4rem !important;
+                        color: $color-primary !important;
+                        font-weight: 600 !important;
+                    }
+
+                    &-code {
+                        font-size: 2.4rem !important;
+                        font-weight: 600;
+                    }
+
+                    &-left {
+                        margin-right: 10px;
+                        width: 80%;
+                        text-align: right;
+                        font-size: 1.3rem;
+                        font-weight: 500;
+                        font-weight: 500;
+                        color: $color-text-2;
+                        text-transform: uppercase;
+                    }
+                    &-right {
+                        width: 20%;
+                        font-size: 1.4rem;
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+
+        & .card__desc {
+            margin-bottom: 20px;
+            & h3 {
+                font-size: 1.7rem;
+                font-weight: 600;
+                color: $color-text;
+                margin-bottom: 5px;
+            }
+            & p {
+                font-size: 1.4rem;
+                color: $color-text-2;
+                font-weight: 400;
+                line-height: 2rem;
+            }
+        }
+
+        & .card__rollcallsesson {
+            & h3 {
+                font-size: 1.7rem;
+                font-weight: 600;
+                color: $color-text;
+                margin-bottom: 5px;
+            }
+
+            & .table__desc {
+                min-width: 50%;
+                & span {
+                    font-size: 1.4rem;
+                    color: $color-text;
+                    font-weight: 600;
+                }
+                & p {
+                    display: block;
+                    display: -webkit-box;
+                    font-size: 1.3rem;
+                    line-height: 2rem;
+                    -webkit-line-clamp: 3; /* số dòng hiển thị */
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    color: $color-text-2;
+                }
+            }
+
+            & .table__absent {
+                font-size: 1.5rem;
+                font-weight: 500;
+            }
+
+            & .table__is-study {
+                font-size: 1.5rem;
+                font-weight: 500;
+            }
+
+            & .table__end {
+                font-size: 1.4rem;
+                font-weight: 500;
+                &--yes {
+                    color: crimson;
+                }
+                &--no {
+                    color: $color-primary;
+                }
+            }
+
+            & .table__control {
+                width: 80px !important;
+            }
+        }
+    }
+
+    // Reponsesive
+    @include MediaQuery(MD) {
+        &-card {
+            & .card__rollcallsesson {
+                & .table__desc {
+                    min-width: 50%;
+                    width: 300px !important;
+                }
+            }
+        }
+    }
+    @include MediaQuery(SM) {
+        & {
+            padding: 20px;
+            &-card {
+                padding: 50px 15px;
+                & .card__header {
+                    flex-direction: column;
+                    &-left {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        height: 100px;
+                        margin-bottom: 20px;
+                        flex-direction: column;
+                        height: unset;
+                        & .left {
+                            &__logo {
+                                margin: 0px 0px 30px 0px;
+                            }
+                            &__lesson-infor {
+                                padding: 30px 0px;
+                                border-top: 1.5px solid #e2e8f0;
+                                border-bottom: 1.5px solid #e2e8f0;
+                                border-left: unset;
+                            }
+                        }
+                    }
+                    &-right {
+                        width: 100%;
+                        & .infor__row {
+                            display: flex;
+                            justify-content: center;
+                            margin-bottom: 8px;
+
+                            &-left {
+                                width: 50%;
+                                text-align: right;
+                                font-size: 1.3rem;
+                                font-weight: 500;
+                                font-weight: 500;
+                                color: $color-text-2;
+                                text-transform: uppercase;
+                            }
+                            &-right {
+                                width: 50%;
+                                font-size: 1.4rem;
+                                font-weight: 500;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

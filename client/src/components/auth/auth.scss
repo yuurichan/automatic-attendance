@@ -1,0 +1,159 @@
+@import "../../stylesSass/variables";
+@import "../../stylesSass/mixin";
+
+.auth-page {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+    overflow: hidden;
+    &__form {
+        width: 50%;
+        background-color: $color-white;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        padding: 65px;
+        &-wrapper {
+            width: 320px;
+            height: 100%;
+        }
+        &-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+        &-title {
+            font-size: 3.4rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        &-detail {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 40px;
+            & a {
+                color: $color-primary-text;
+                text-decoration: none;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+        & .form-group {
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            margin-bottom: 10px;
+            & label {
+                @include labelStyle;
+            }
+            & input {
+                @include inputStyle;
+            }
+            &__password {
+                position: relative;
+                & span {
+                    position: absolute;
+                    right: 5px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+            }
+            & small {
+                font-size: 1.2rem;
+                color: $color-dander;
+                font-weight: 500;
+                margin-top: 3px;
+            }
+        }
+        & .btn-primary {
+            margin-top: 15px !important;
+        }
+    }
+    &__background {
+        width: 50%;
+        height: 100%;
+        background-color: rgb(30 41 59);
+        color: $color-white;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        &-content {
+            padding: 0 110px;
+            & h2 {
+                font-size: 3.4rem;
+                margin-bottom: 10px;
+            }
+            & p {
+                font-size: 1.4rem;
+            }
+        }
+        &-circle {
+            position: absolute;
+            background-color: transparent;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            border: 130px solid rgba(90, 102, 119, 0.1);
+            &--small {
+                transform: translateY(-50%, -50%);
+                top: -50%;
+                left: -50%;
+            }
+            &--medium {
+                top: 50%;
+                right: -50%;
+                transform: translateY(-50%, -50%);
+            }
+        }
+        &-dots {
+            position: absolute;
+            background-color: transparent;
+            width: 200px;
+            height: 150px;
+            right: 0px;
+            top: -10px;
+        }
+    }
+    @include MediaQuery(MD) {
+        & {
+            flex-wrap: wrap;
+        }
+        &__form {
+            width: 100%;
+            align-items: center;
+            &-wrapper {
+                margin-top: -100px;
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                width: 400px;
+                padding: 0 20px;
+                & form {
+                    width: 100%;
+                }
+            }
+        }
+        &__background {
+            display: none;
+        }
+    }
+    @include MediaQuery(XS) {    
+        &__form {           
+            padding: 0px;
+            &-wrapper {         
+                width: 100%;
+                padding: 0 40px;
+                & form {
+                    width: 100%;
+                }
+            }
+        }       
+    }
+}

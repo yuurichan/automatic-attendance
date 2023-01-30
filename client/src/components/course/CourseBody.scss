@@ -1,0 +1,96 @@
+@import "../../stylesSass/variables";
+@import "../../stylesSass/mixin";
+
+.course__body {
+    padding: 20px;
+    & .course-name {
+        min-width: 200px !important;
+    }
+    & .course__control {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 16px;
+        min-height: 65px;
+        background-color: $color-white;
+        border-radius: 5px;
+        box-shadow: $box-shadow-1;
+        & form {
+            display: flex;
+            & .form-group {
+                display: flex;
+                align-items: center;
+                height: 36px;
+                margin-right: 20px;
+                position: relative;
+                width: 230px;
+                & input {
+                    position: absolute;
+                    z-index: 9;
+                    width: 100%;
+                    margin-right: 5px;
+                    @include inputStyle;
+                    min-height: 36px;
+                    padding-right: 25px !important;
+                    padding-left: 10px;
+                    font-size: 1.4rem;
+                }
+                & i {
+                    font-size: 1.8rem;
+                    color: $color-text-secondary;
+                    position: absolute;
+                    z-index: 10;
+                    right: 5px;
+                }
+                & input:disabled {
+                    background-color: rgb(209, 208, 208);
+                }
+            }
+        }
+    }
+
+    @include MediaQuery(MD) {
+        & .course__control {
+            & form {
+                flex-wrap: wrap;
+                & .form-group:not(:last-child) {
+                    margin-bottom: 8px;
+                }
+            }
+            & .css-zqcytf-MuiButtonGroup-root .MuiButtonGroup-grouped {
+                width: 150px;
+            }
+        }
+        & .course-name {
+            min-width: 180px !important;
+        }
+    }
+    @include MediaQuery(SM) {
+        & .course__control {
+            & .css-zqcytf-MuiButtonGroup-root .MuiButtonGroup-grouped {
+                width: fit-content;
+                height: 100%;
+                flex-direction: column;
+            }
+        }
+
+        & .course-name {
+            min-width: 180px !important;
+        }
+    }
+    @include MediaQuery(VXS) {
+        & .course__control {
+            & form {
+                flex-wrap: wrap;
+                width: 80%;
+                & .form-group {
+                    & input {
+                        font-size: 1.2rem !important;
+                    }
+                }
+            }
+        }
+    }
+}

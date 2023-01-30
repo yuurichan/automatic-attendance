@@ -1,0 +1,38 @@
+@import "../../../stylesSass/variables";
+@import "../../../stylesSass/mixin";
+.teacher__tabel {
+    padding: 20px;
+    & table {
+        padding: 20px;
+        width: 100%;
+        background-color: $color-white;
+        box-shadow: $box-shadow-1;
+        border-radius: 10px;
+        & tr {
+            margin: 10px 0px;
+            & th {
+                text-align: left;
+                font-size: 1.3rem;
+                color: #64748b;
+            }
+        }
+    }
+    @include MediaQuery(MD) {
+        & {
+            max-width: 100%;
+            overflow-x: auto;
+            & table {
+                width: 1000px;
+            }
+        }
+    }
+    @include MediaQuery(SM) {
+        & {
+            max-width: 100%;
+            overflow-x: auto;
+            & table {
+                width: 1000px;
+            }
+        }
+    }
+}

@@ -1,0 +1,210 @@
+@import "../../stylesSass/variables";
+@import "../../stylesSass/mixin";
+
+.rollcallsession-detail {
+    display: flex;
+    padding: 30px 40px;
+    justify-content: center;
+    flex-direction: column;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        & .header__left {
+            width: 60%;
+            & h2 {
+                font-size: 2.8rem;
+                color: $color-primary;
+                margin-bottom: 5px;
+                & span {
+                    color: $color-text;
+                    margin-left: 10px;
+                    font-size: 2rem;
+                }
+            }
+
+            &-comment {
+                font-size: 1.4rem;
+                color: $color-text-2;
+                line-height: 2rem;
+            }
+        }
+
+        & .header__right {
+            display: flex;
+            align-items: center;
+            & h2 {
+                color: crimson;
+                font-size: 1.8rem;
+                display: flex;
+                align-content: center;
+                & i {
+                    font-size: 2rem;
+                    margin-right: 2px;
+                    margin-top: 1px;
+                }
+            }
+            & div {
+                margin-left: 10px;
+                & > button {
+                    height: 40px;
+                    padding: 0 15px;
+                }
+            }
+        }
+    }
+
+    &__control {
+        &-detail {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: $color-white;
+            border-radius: 5px;
+            box-shadow: $box-shadow-1;
+            & .detail__infor {
+                width: 50%;
+                padding-right: 40px;
+                &-header {
+                    display: flex;
+                    justify-content: space-between;
+                    & .header__right {
+                        display: flex;
+                        &-badge {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 4px 12px;
+                            height: 25px;
+                            background-color: rgb(219 234 254);
+                            color: rgb(30 64 175);
+                            margin-left: 10px;
+                            font-size: 1.2rem;
+                            font-weight: 500;
+                            border-radius: 50px;
+                            &--absent {
+                                background-color: rgb(252 231 243);
+                                color: rgb(157 23 77);
+                            }
+                        }
+                    }
+                }
+
+                & img {
+                    width: 80px;
+                    height: 80px;
+                    margin-bottom: 20px;
+                }
+
+                &-group {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 3px;
+                    & i {
+                        font-size: 2rem;
+                        color: $color-text-2;
+                        margin-right: 6px;
+                    }
+                    & span {
+                        font-size: 1.2rem;
+                        color: $color-text;
+                        font-weight: 500;
+                    }
+                }
+            }
+
+            & .detail__comment {
+                width: 50%;
+                & form {
+                    width: 100%;
+                    & .form__group {
+                        display: flex;
+                        flex-direction: column;
+                        margin-bottom: 10px;
+                        & textarea {
+                            width: 100%;
+                            @include inputStyle;
+                            padding: 10px;
+                            resize: none;
+                        }
+
+                        & label {
+                            @include labelStyle;
+                        }
+                    }
+
+                    & .form__button {
+                        display: flex;
+                        & button {
+                            width: 100% !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &__table {
+        width: 100%;
+        margin-top: 25px;
+        background-color: $color-white;
+        border-radius: 5px;
+        box-shadow: $box-shadow-1;
+    }
+
+    &__camera {
+        & button {
+            margin-bottom: 30px;
+        }
+        padding: 30px;
+        &-wrapper {
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 550px;
+            position: relative;
+            border: 1px solid $border-color;
+            border-radius: 2px;
+            margin-bottom: 40px;
+            & video {
+                width: 100%;
+                height: 100%;
+            }
+            & canvas {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 3;
+            }
+        }
+    }
+
+    @include MediaQuery(SM) {
+        & {
+            padding: 20px;
+        }
+        &__control {
+            &-detail {
+                flex-wrap: wrap;
+                & .detail__infor {
+                    width: 100%;
+                    margin-bottom: 20px;
+                    padding-right: 0px;
+
+                    & img {
+                        width: 70px;
+                        height: 70px;
+                    }
+                }
+
+                & .detail__comment {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

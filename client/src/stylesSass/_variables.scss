@@ -1,0 +1,37 @@
+$font-family-primary: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+
+$color-primary: #473fce;
+$color-primary-light: #5f59ca;
+$color-primary-dark: #2f26d3;
+$color-primary-text: rgb(99, 102, 241);
+$color-primary-text-light: rgb(129, 140, 248);
+
+$color-white: #fff;
+$color-dark: #000;
+$color-dander: #dc2626;
+
+$color-text: #1e293b;
+$color-text-2: #64748b;
+$color-text-secondary: rgb(148, 163, 184);
+
+$color-text-hint: rgb(148, 163, 184);
+$color-text-hint-hover: #eaedf1;
+$color-text-hint-hover-active: rgb(222, 224, 226);
+
+$border-color: rgb(203 213 225);
+
+// Reponsive
+$VXS: 321px;
+$XS: 479px;
+$SM: 767px;
+$MD: 1023px;
+$XL: 1169px;
+
+$width-sidebar: 280px;
+$box-shadow-1: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+$box-shadow-2: 0 2px 6px 0 rgb(0 0 0 / 0.15), 0 2px 4px -2px rgb(0 0 0 / 0.15);
+$height-top-header: 60px;
+$height-top-user: 150px;
+$height-body: calc(100vh - $height-top-user - $height-top-header - 2px - 2px);
+$height-body-xl: calc(100vh - $height-top-header - 2px - 2px);

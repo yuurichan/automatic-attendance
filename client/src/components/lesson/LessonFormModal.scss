@@ -1,0 +1,180 @@
+@import "../../stylesSass/variables";
+@import "../../stylesSass/mixin";
+.lesson__form {
+    & .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+        & label {
+            @include labelStyle;
+        }
+        & input {
+            @include inputStyle;
+        }
+        & select {
+            @include inputStyle;
+        }
+
+        & textarea {
+            @include inputStyle;
+            resize: none;
+            padding: 12px;
+        }
+
+        &__course {
+            max-height: 180px;
+            overflow-y: scroll;
+            padding: 5px;
+            /* width */
+            &::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            /* Track */
+            &::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 2px;
+            }
+
+            /* Handle */
+            &::-webkit-scrollbar-thumb {
+                background: $color-primary-light;
+                border-radius: 2px;
+            }
+
+            /* Handle on hover */
+            &::-webkit-scrollbar-thumb:hover {
+                background: $color-primary;
+            }
+            &-row {
+                display: flex;
+                flex-wrap: wrap;
+                margin-left: -10px;
+                & .row__item {
+                    width: calc(50% - 10px);
+                    margin-left: 10px;
+                    margin-bottom: 10px;
+                    cursor: pointer;
+                    background-color: $color-white;
+                    padding: 6px;
+                    border-radius: 5px;
+                    border: 1px solid $border-color;
+                    box-shadow: $box-shadow-1;
+                    display: flex;
+                    align-items: center;
+                    transition: all 0.1s linear;
+                    min-height: 80px;
+                    height: 80px;
+
+                    &.active {
+                        background-color: $color-primary !important;
+                    }
+                    &:hover,
+                    &.active {
+                        background-color: $color-primary-light;
+                        & .row__item-student {
+                            color: $color-white !important;
+                        }
+
+                        & .row__item-course .course__code {
+                            color: $color-white !important;
+                        }
+
+                        & .row__item-course .course__name {
+                            color: $color-white !important;
+                        }
+
+                        & .row__item-course .course__createAt {
+                            color: $color-white !important;
+                        }
+                    }
+
+                    &-student {
+                        width: 15%;
+                        max-width: 15%;
+                        // display: flex;
+                        // justify-content: center;
+                        // align-items: center;
+                        text-align: center;
+                        font-size: 2.6rem;
+                        font-weight: 600;
+                        color: $color-primary;
+                        -webkit-line-clamp: 1; /* số dòng hiển thị */
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    &-course {
+                        width: 78%;
+                        align-items: center;
+                        padding-right: 5px;
+                        & .course {
+                            &__name {
+                                font-size: 1.7rem;
+                                font-weight: 600;
+                                color: $color-text;
+                                display: -webkit-box;
+                                -webkit-line-clamp: 1; /* số dòng hiển thị */
+                                -webkit-box-orient: vertical;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+                            &__code {
+                                font-size: 1.5rem;
+                                font-weight: 600;
+                                color: $color-text-2;
+                            }
+                            &__createAt {
+                                font-size: 1.4rem;
+                                margin-top: 5px;
+                                display: block;
+                            }
+                        }
+                    }
+
+                    &-use {
+                        opacity: 0;
+                        visibility: hidden;
+
+                        // display: none;
+                    }
+
+                    &.active {
+                        & .row__item-use {
+                            opacity: 1;
+                            visibility: visible;
+                            // display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include MediaQuery(MD) {
+    .MuiBox-root.css-1mgnmsd {
+        width: 80%;
+    }
+}
+
+@include MediaQuery(SM) {
+    .MuiBox-root.css-1mgnmsd {
+        width: 80%;
+    }
+    .form-group__course {
+        height: 135px;
+    }
+
+    .form-group__course-row {
+        & .row__item {
+            width: calc(100% - 10px) !important;
+        }
+    }
+}
+
+.MuiFormControl-root.MuiTextField-root.css-1u3bzj6-MuiFormControl-root-MuiTextField-root label {
+    font-size: 1.8rem;
+    background-color: #fff;
+}

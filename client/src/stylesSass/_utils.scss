@@ -1,0 +1,30 @@
+
+@import "../stylesSass/variables";
+
+.pd-left{
+    padding-left: $width-sidebar;
+}
+
+.pd-top{
+    padding-top: $height-top-header;
+}
+
+// date picker
+.css-l0iinn {
+    font-size: 1.4rem !important;
+    font-weight: 600;
+}
+
+.css-1n2mv2k > span {
+    font-size: 1.3rem !important;
+    font-weight: 600;
+}
+.css-mvmu1r div button {
+    font-size: 1.3rem;
+}
+.css-m1gykc{
+    font-size: 1.3rem !important;
+}
+.css-i4bv87-MuiSvgIcon-root{
+    font-size: 2rem !important;
+}

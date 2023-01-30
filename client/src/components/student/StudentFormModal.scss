@@ -1,0 +1,21 @@
+@import "../../stylesSass/variables";
+@import "../../stylesSass/mixin";
+
+.student__form {
+    & .form__group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        & label{
+            @include labelStyle;
+        }
+
+        & input{
+            @include inputStyle;
+        }
+
+        & .css-ahj2mt-MuiTypography-root{
+            font-size: 1.4rem;
+        }
+    }
+}
