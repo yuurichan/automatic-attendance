@@ -21,7 +21,7 @@ const StudentScheme = new mongoose.Schema({
         default: "male", // 1: male, 2:female
     },
     phone: {
-        type: Number
+        type: String
     },
     course: {
         type: mongoose.Types.ObjectId,

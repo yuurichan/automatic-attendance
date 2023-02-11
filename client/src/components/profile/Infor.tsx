@@ -33,7 +33,10 @@ const Infor: React.FC<InforProps> = ({ auth, id, dispatch }) => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showCfPassword, setShowCfPassword] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false)
-
+    
+    // fix
+    const [showOldPassword, setShowOldPassword] = useState<boolean>(false);
+    
     const { name, password, cfPassword, avatar } = user;
 
     const handleChange = (e: InputChange) => {
@@ -80,7 +83,7 @@ const Infor: React.FC<InforProps> = ({ auth, id, dispatch }) => {
             await dispatch(updateProfile(name as string, avatar as File, auth))
         }
 
-        // Cap nhat lai ma khau 
+        // Cap nhat lai mat khau 
         if (password && auth.access_token) {
             const errors = validUpdatePassword(user)
             setErrors(errors)
@@ -138,9 +141,14 @@ const Infor: React.FC<InforProps> = ({ auth, id, dispatch }) => {
                 <input disabled={true} type="text" id="account" name="account" value={auth.user ? auth.user.account : ""}
                     onChange={handleChange} />
             </div>
-            {/* Password */}
+            
+            {/* Old Password */}
+            {/* Nếu đã vào được tài khoản thì đã biết trc mật khẩu cũ? */}
+            {/* Đồng thời phải làm thay đổi toàn bộ User struct của backend */}
+
+            {/* New Password */}
             <div className='form-group'>
-                <label htmlFor="password">Mật khẩu *</label>
+                <label htmlFor="password">Mật khẩu mới *</label>
                 <div className="form-group__password">
                     <input className={errors.errorPassword && "danger"} type={showPassword ? "text" : "password"}
                         id="password" name="password" value={password} onChange={handleChange} />
@@ -159,7 +167,7 @@ const Infor: React.FC<InforProps> = ({ auth, id, dispatch }) => {
 
             {/* Confirm password */}
             <div className='form-group'>
-                <label htmlFor="cfPassword">Nhập lại mật khẩu *</label>
+                <label htmlFor="cfPassword">Nhập lại mật khẩu mới *</label>
                 <div className="form-group__password">
                     <input className={errors.errorCfPassword && "danger"} type={showCfPassword ? "text" : "password"}
                         id="cfPassword" name="cfPassword" value={cfPassword} onChange={handleChange} />
