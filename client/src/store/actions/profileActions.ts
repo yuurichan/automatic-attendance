@@ -75,6 +75,7 @@ export const getUserCourse = (token: string, userId: string) => async (dispatch:
     try {
         dispatch({ type: LOADING_USER_COURSE, payload: { loading: true } })
         const res = await getAPI(`user_course/${userId}`, token)
+        console.log(res.data)
 
         const { courses, total, result } = res.data
 

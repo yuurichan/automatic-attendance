@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "./CourseBody.scss"
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { InputChange, RootStore, Course } from '../../utils/interface'
 import dayjs from 'dayjs'
 import PaginationComponent from '../globals/pagination/Pagination'
-import { changePageCourse, deleteCourse, sortByCourseName, sortByDate, searchByCourseName, searchByCourseCode, searchByCourseTeacher } from '../../store/actions/courseActions'
+import { getCourses ,changePageCourse, deleteCourse, sortByCourseName, sortByDate, searchByCourseName, searchByCourseCode, searchByCourseTeacher } from '../../store/actions/courseActions'
 import Loading from '../globals/loading/Loading'
 // MUI
 import Table from '@mui/material/Table';
@@ -23,6 +23,8 @@ import CourseFormModal from './CourseFormModal'
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
+import { CoursePayload } from '../../store/types/courseTypes'
+import { get } from 'http'
 
 const useStyles = makeStyles({
     TableContainer: {
@@ -88,15 +90,100 @@ const CourseBody = () => {
     const { course: courses, auth, profile } = useSelector((state: RootStore) => state)
     const [searchByName, setSearchByName] = useState<string>('')
     const [searchByCode, setSearchByCode] = useState<string>('')
-    const [searchByNameTeacher, setCourseByNameTeacher] = useState<string>('')
+    const [searchByNameTeacher, setCourseByNameTeacher] = useState<string>('');
     const [loadingDeleteCourse, setLoadingDeleteCourse] = useState<string>('');
     const [open, setOpen] = useState<boolean>(false);
     const [openDialog, setOpenDialog] = useState<any>({});
     const [sordByDate, setSortByDate] = useState<"asc" | "desc">("desc");
     const [sordByCourseName, setSortByCourseName] = useState<"asc" | "desc">("asc");
     const [onEdit, setOnEdit] = useState<Course | null>({});
-    let courseRes = (auth.user?.role === 'admin') ? courses?.result : courses?.result?.filter(course => (auth.user?._id === course.teacher?._id) );
-    console.log(courseRes?.length, JSON.stringify(courseRes))
+
+    //
+    const [userCourse, setUserCourse] = useState<Course[]>(courses.courses || []);
+    //console.log('userCourse State', userCourse);
+        // lọc môn theo gv được nhưng sẽ làm rối logic của pagination
+    // will be used for displaying 0 courses
+    // useEffect(() => {
+    //     if (courses.courses) {
+    //         let userCourse: Course[] = [];
+    //         if (auth.user?.role !== 'admin' && auth.user?.role !== 'manager') {
+    //             userCourse = courses.courses.filter((course: Course) => {
+    //                 if (course.teacher && auth.user) {
+    //                     return course.teacher._id === auth.user._id
+    //                 }
+    //             });
+    //             setUserCourse(userCourse)
+    //         } 
+    //     }
+    //     // return () => {
+    //     //     setUserCourse([])
+    //     // }
+    // }, [])
+    // userCourse.forEach((course) => {
+    //     console.log(course);
+    // })
+    console.log('course state: ', courses);
+
+    const [curCourses, setCurCourses] = useState<CoursePayload>(courses);
+    const arraySlice = (page: number, limit: number, array: Course[]) => {
+        return array.slice((page - 1) * limit, page * limit)
+    }
+    
+    //let tempCourses: Course[] = courses.courses ? courses.courses : [];
+    // Dùng cho việc hiển thị môn theo người dùng - ko hiện của người khác
+    useEffect (() => {
+        console.log('Is filter called?');
+        if (auth.user?.role !== 'admin' && auth.user?.role !== 'manager') {
+            console.log('Yes - filter is called.')
+            let tempCourses: Course[] = [];
+            if (courses.courses) {
+                //let tempCourses: Course[] = [];
+                if (auth.user?.role !== 'admin' && auth.user?.role !== 'manager') {
+                    // Hiển thị theo người dùng
+                    tempCourses = courses.courses.filter((course: Course) => {
+                        if (course.teacher && auth.user) {
+                            return course.teacher._id === auth.user._id
+                        }
+                    });
+
+                    // Hiển thị theo người dùng khi search (vì cái này thuộc 1 luồng dispatch khác)
+                    if (courses.searching?.onSearch === true) {
+                        console.log('Search filter is also called!');
+                        
+                        // Khi search courses.coursesSearch có môn
+                        if (courses.coursesSearch?.length !== 0) {
+                            tempCourses = (courses.coursesSearch || []).filter((course: Course) => {
+                                if (course.teacher && auth.user) {
+                                    return course.teacher._id === auth.user._id
+                                }
+                            });
+                            console.log('After search tempC: ', tempCourses);
+                        }
+                        // Khi search courses.coursesSearch không có môn hợp lệ
+                        else {
+                            console.log('No courses are found apparently');
+                            tempCourses = [];
+                        }
+                    }
+                    //setUserCourse(tempCourses)
+                } 
+                // set lại courses, length và result (result là cái sẽ hiển thị trên màn hình người dùng)
+                setCurCourses({...courses,
+                    courses: tempCourses,
+                    coursesLength: tempCourses.length,
+                    result: arraySlice(courses.page || 1, courses.limit || 5, tempCourses)
+                })
+                setUserCourse(tempCourses)
+            }
+            //dispatch(searchByCourseTeacher((auth.user?.name || '') as string))
+        }
+        else {
+            console.log('No - Everything is kept as is');
+            setCurCourses(courses);
+        }
+        //console.log(curCourses);
+    }, [courses])
+    console.log('curCourses: ', curCourses)
 
     const handleClickOpen = (course: Course | null) => {
         setOnEdit(course)
@@ -151,6 +238,36 @@ const CourseBody = () => {
         dispatch(searchByCourseTeacher(e.target.value as string))
     }
 
+    // chỉ cho phép admin/lãnh đạo khoa xem hết các lớp; còn lại tài khoản nào chỉ xem lớp của tài khoản nấy
+    // (admin/manager phải tự search lớp)
+    const initSearchByCourseTeacher = () => {
+        const teacherName = auth.user?.name ? auth.user.name : '';
+        //setCourseByNameTeacher(teacherName)
+        // tắt cái này để mọi thứ render theo giáo viên hiện tại nhưng ko điền value vào ô tìm kiếm
+        dispatch(searchByCourseTeacher(teacherName as string))
+    }
+
+    // is called once upon rendering, reloading doesn't affect
+    // nếu bỏ [] thì mỗi lần rerender nó vẫn sẽ giữ nguyên dsach các môn của gv hiện tại
+    // nhưng pagination và 2 thanh search còn lại sẽ ko sd đc
+    // useEffect(() => {
+    //     if (auth.user?.role !== 'admin' && auth.user?.role !== 'manager') {
+    //         initSearchByCourseTeacher();
+    //         dispatch(searchByCourseName(''));
+    //         dispatch(searchByCourseCode(''));
+    //         console.log(courses.courses);
+    //         //dispatch(searchByCourseTeacher(''));
+    //     }
+    // }, [searchByName, searchByCode])
+    // useEffect(() => {
+    //     if (auth.user?.role !== 'admin' && auth.user?.role !== 'manager') {
+    //         initSearchByCourseTeacher();
+    //         dispatch(searchByCourseName(''));
+    //         dispatch(searchByCourseCode(''));
+    //         //dispatch(searchByCourseTeacher(''));
+    //     }
+    // }, [])
+
     return (
         <div className="dashbroad__body course__body">
             <div className="course__control">
@@ -163,10 +280,11 @@ const CourseBody = () => {
                         <input placeholder="Tìm kiếm theo mã học phần..." type="text" onChange={handleSearchByCourseCode} value={searchByCode} />
                         <i className='bx bx-search'></i>
                     </div>
-                    <div className="form-group">
-                        <input placeholder="Tìm kiếm theo giáo viên..." type="text" onChange={handleSearchByCourseTeacher} value={searchByNameTeacher} disabled={auth.user?.role === 'teacher'}/>
+                    {/* Can be removed from rendering with same logic */}
+                    {<div className="form-group">
+                        <input placeholder="Tìm kiếm theo giáo viên..." disabled={!(auth.user?.role === 'admin' || auth.user?.role === 'manager')} type="text" onChange={handleSearchByCourseTeacher} value={searchByNameTeacher} />
                         <i className='bx bx-search'></i>
-                    </div>
+                    </div>}
                 </form>
                 <div className="course__control-right">
                     <PrimaryTooltip title="Thêm môn học">
@@ -208,7 +326,7 @@ const CourseBody = () => {
                             <TableCell align="left" className={classes.TableCellHead}>Học kì</TableCell>
                             <TableCell align="left" className={classes.TableCellHead}>Năm học</TableCell>
                             <TableCell align="left" className={classes.TableCellHead}>Sinh viên</TableCell>
-                            <TableCell align="left" className={classes.TableCellHead} style={{ minWidth: "120px" }}>
+                            {/* <TableCell align="left" className={classes.TableCellHead} style={{ minWidth: "120px" }}>
                                 <p style={{ display: "flex", alignItems: 'center' }}>
                                     {
                                         sordByDate === "desc" ? <i
@@ -224,7 +342,7 @@ const CourseBody = () => {
                                     }
                                     Ngày tạo
                                 </p>
-                            </TableCell>
+                            </TableCell> */}
                             <TableCell align="left" className={classes.TableCellHead}>Hành động</TableCell>
                         </TableRow>
                     </TableHead>
@@ -234,14 +352,13 @@ const CourseBody = () => {
                         {/* Loading */}
                         <TableRow>
                             {
-                                courses.loading && <TableCell> <h3 style={{ fontSize: "14px", padding: '10px', color: "#473fce" }}>Loading...</h3></TableCell>
+                                curCourses.loading && <TableCell> <h3 style={{ fontSize: "14px", padding: '10px', color: "#473fce" }}>Loading...</h3></TableCell>
                             }
                         </TableRow>
                         <TableRow>
                             {
-                                ((courses.coursesLength === 0 || courseRes?.length === 0) && courses.loading !== true && courses.searching?.onSearch === false)
+                                ((curCourses.coursesLength === 0) && curCourses.loading !== true && curCourses.searching?.onSearch === false)
                                 && <TableCell scope="row">
-                                    {/* || courseRes?.length === 0 */}
                                     <h3 style={{ fontSize: "14px", padding: '10px', color: "#473fce" }}>Chưa có môn học nào được thêm</h3>
                                 </TableCell>
 
@@ -249,23 +366,22 @@ const CourseBody = () => {
                         </TableRow>
                         <TableRow>
                             {
-                                (courses?.coursesSearch && courses.coursesSearch.length === 0 && courses.loading !== true && courses.searching?.onSearch === true)
+                                (
+                                    (curCourses?.coursesSearch && curCourses.coursesSearch.length === 0 && curCourses.loading !== true && curCourses.searching?.onSearch === true) ||
+                                    ((auth.user?.role !== 'admin' && auth.user?.role !== 'manager') && curCourses.coursesLength === 0 && curCourses?.coursesSearch && curCourses.coursesSearch.length !== 0 && curCourses.loading !== true && curCourses.searching?.onSearch === true)
+                                )
                                 && <TableCell scope="row">
                                     <h3 style={{ fontSize: "14px", padding: '10px', color: "#473fce" }}>Không tìm thấy môn học hợp lệ</h3>
                                 </TableCell>
                             }
                         </TableRow>
                         {
-                            // Check for length also
-                            courses.result?.filter(course => ((auth.user?.role === 'admin') ? true : (auth.user?._id === course.teacher?._id))).map((course, index) => {
-                            //courses.result?.map((course, index) => {
-                            //courseRes?.map((course, index) => {
-                                // return (auth.user?.role === 'admin' || auth.user?._id === course.teacher?._id) && <TableRow
+                            curCourses.result?.map((course, index) => {
                                 return <TableRow
                                     key={course._id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                    <TableCell className={classes.TableCellBody} align='center' component="th" scope="row">{(courses.page && courses.limit) && ((courses.page - 1) * courses.limit) + index + 1}</TableCell>
+                                    <TableCell className={classes.TableCellBody} align='center' component="th" scope="row">{(curCourses.page && curCourses.limit) && ((curCourses.page - 1) * curCourses.limit) + index + 1}</TableCell>
                                     <TableCell className={`${classes.TableCellBody} course-name`} align="left">{course.name}</TableCell>
                                     <TableCell className={classes.TableCellBody} align="center" style={{ textTransform: "uppercase" }}>{course.courseCode}</TableCell>
                                     <TableCell className={classes.TableCellBody} align="center">{course.credit}</TableCell>
@@ -279,11 +395,12 @@ const CourseBody = () => {
                                             course.students?.length
                                         }
                                     </TableCell>
-                                    <TableCell className={classes.TableCellBody} align="left">{dayjs(course.createdAt).format("DD/MM/YYYY")}</TableCell>
+                                    {/* <TableCell className={classes.TableCellBody} align="left">{dayjs(course.createdAt).format("DD/MM/YYYY")}</TableCell> */}
                                     <TableCell className={classes.TableCellBody} align="left">
                                         <div>
                                             <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                                                <PrimaryTooltip title="Chi tiết  môn học" className={classes.Tooltip}>
+                                                {
+                                                (auth.user?.role === 'admin' || auth.user?.role === 'manager' || auth.user?._id === course.teacher?._id) && <PrimaryTooltip title="Chi tiết  môn học" className={classes.Tooltip}>
                                                     <Button className={`${classes.Button} ${classes.ButtonInfor}`} color="primary" >
                                                         <Link to={`/course/${course._id}`} style={{ textDecoration: "none", color: '#fff', width: "100%", height: "100%" }}>
                                                             <i style={{ fontSize: "2rem" }}
@@ -292,6 +409,7 @@ const CourseBody = () => {
                                                         </Link>
                                                     </Button>
                                                 </PrimaryTooltip>
+                                                }
                                                 {
                                                     // admin hoac teacher tao thi moi co the chinh sua hoac xoa
                                                     (auth.user?.role === 'admin' || auth.user?._id === course.teacher?._id) && <React.Fragment>
@@ -338,13 +456,11 @@ const CourseBody = () => {
                 </Table>
             </TableContainer>
             {
-                (courses.coursesLength !== 0 && courseRes?.length !== 0) && <Box display='flex' justifyContent="flex-end" bgcolor="#fff" padding="16px">
-                    <PaginationComponent page={(auth.user?.role === 'admin') ? courses.page as number : (Math.trunc(courseRes ? courseRes.length : 0 / 5) ? Math.trunc(courseRes ? courseRes.length : 0 / 5) : 1 as number)} variant='outlined' shape='rounded' onChange={handleChangePage} className={classes.Pagination} total={(auth.user?.role === 'admin') ? (courses.coursesLength ? courses.coursesLength : 0) : (courseRes ? courseRes.length : 0)}></PaginationComponent>
+                curCourses.coursesLength !== 0 && <Box display='flex' justifyContent="flex-end" bgcolor="#fff" padding="16px">
+                    <PaginationComponent page={curCourses.page as number} variant='outlined' shape='rounded' onChange={handleChangePage} className={classes.Pagination} total={curCourses.coursesLength ? curCourses.coursesLength : 0}></PaginationComponent>
                 </Box>
             }
-            {/* <PaginationComponent page={courses.page as number} variant='outlined' shape='rounded' onChange={handleChangePage} className={classes.Pagination} total={courses.coursesLength ? courses.coursesLength : 0}></PaginationComponent> */}
             {/* Dialog create course */}
-            {/* work out the logic for page= and total= ? */}
             <CourseFormModal open={open} hanldeSetOpen={setOpen} onEdit={onEdit} setOnEdit={setOnEdit} />
         </div >
     )

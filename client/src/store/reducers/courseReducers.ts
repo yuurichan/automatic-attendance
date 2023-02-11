@@ -1,5 +1,6 @@
 import { Course, SortingCourse, SearchingCourse } from '../../utils/interface'
 import nonAccentVietnamese from '../../utils/non-vietnamese'
+import { searchByCourseTeacher } from '../actions/courseActions'
 import {
     GET_COURSES,
     CoursePayload,
@@ -204,7 +205,8 @@ const courseReducer = (state: CoursePayload = initialState, action: CourseType):
             if (state.searching) {
                 const searching: SearchingCourse = {
                     ...state.searching,
-                    onSearch: false
+                    onSearch: false,
+                    searchByCourseName: ""
                 }
 
                 if (action.payload.courseName === "" &&
@@ -213,6 +215,10 @@ const courseReducer = (state: CoursePayload = initialState, action: CourseType):
                     return {
                         ...state,
                         searching,
+                        // searching: {
+                        //     onSearch: false,
+                        //     searchByCourseName: ""
+                        // },
                         coursesLength: state.courses?.length,
                         coursesSearch: [],
                         result: arraySlice(state.page as number, state.limit as number, state.courses as Course[]),
@@ -244,15 +250,20 @@ const courseReducer = (state: CoursePayload = initialState, action: CourseType):
             if (state.searching) {
                 const searching: SearchingCourse = {
                     ...state.searching,
-                    onSearch: false
+                    onSearch: false,
+                    searchByCourseCode: ""
                 }
 
                 if (action.payload.courseCode === "" &&
-                    state.searching.searchByCourseCode === ""
+                    state.searching.searchByCourseName === ""
                     && state.searching.searchByCourseTeacher === "") {
                     return {
                         ...state,
                         searching,
+                        // searching: {
+                        //     onSearch: false,
+                        //     searchByCourseCode: ""
+                        // },
                         coursesLength: state.courses?.length,
                         coursesSearch: [],
                         result: arraySlice(state.page as number, state.limit as number, state.courses as Course[]),
@@ -285,7 +296,8 @@ const courseReducer = (state: CoursePayload = initialState, action: CourseType):
             if (state.searching) {
                 const searching: SearchingCourse = {
                     ...state.searching,
-                    onSearch: false
+                    onSearch: false,
+                    searchByCourseTeacher: ""
                 }
 
                 if (action.payload.courseTeacher === "" &&
@@ -294,6 +306,10 @@ const courseReducer = (state: CoursePayload = initialState, action: CourseType):
                     return {
                         ...state,
                         searching,
+                        // searching: {
+                        //     onSearch: false,
+                        //     searchByCourseTeacher: ""
+                        // },
                         coursesLength: state.courses?.length,
                         coursesSearch: [],
                         result: arraySlice(state.page as number, state.limit as number, state.courses as Course[]),
