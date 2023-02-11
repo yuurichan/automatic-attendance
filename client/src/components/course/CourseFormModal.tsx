@@ -117,6 +117,7 @@ const CourseFormModal: React.FC<CourseFormModalProps> = ({ open, hanldeSetOpen, 
         })
     }
 
+    // Changed yearStart-End format from DD/MM/YYYY to YYYY
     const handleChangeYearStart = (date: Date | null) => {
         try {
             setCourse({
