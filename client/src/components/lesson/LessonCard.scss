@@ -167,3 +167,24 @@
         display: block;
     }
 }
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    & label {
+        @include labelStyle;
+    }
+    & input {
+        @include inputStyle;
+    }
+    & select {
+        @include inputStyle;
+    }
+    & textarea {
+        @include inputStyle;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        resize: vertical;
+    }
+}
