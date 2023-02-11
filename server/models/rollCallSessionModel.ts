@@ -28,6 +28,10 @@ const RollCallSessionScheme = new mongoose.Schema({
     end: {
         type: Boolean,
         default: false
+    },
+    createdAt: {
+        type: String,
+        default: Date().toString()
     }
 }, {
     timestamps: true

@@ -7,11 +7,12 @@ import AttendanceDetailModel from '../models/attendanceDetailModel';
 class RollCallSessionControllers {
     async createRollCallSession(req: RequestUser, res: Response) {
         try {
-            const { lesson, comment } = req.body;
+            const { lesson, comment, newDate } = req.body;
 
             const studentsArrayObject = lesson.course.students.map((student: any) => {
                 return {
-                    date: new Date().toString(),
+                    //date: new Date().toString(),
+                    date: newDate,
                     note: "",
                     student: student._id
                 }
@@ -24,6 +25,7 @@ class RollCallSessionControllers {
             let newRollCallSession = new RollCallSessionModel({
                 lesson,
                 comment,
+                createdAt: newDate,
                 course: lesson.course,
                 teacher: req.user,
                 attendanceDetails: newAttendanceDetailId

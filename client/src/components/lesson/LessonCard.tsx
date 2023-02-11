@@ -18,6 +18,10 @@ import { IconButton } from '@mui/material';
 import { makeStyles } from '@mui/styles'
 import { createRollCallSession } from '../../store/actions/rollCallSession'
 import Loading from '../globals/loading/Loading'
+import DateAdapter from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import TextField from '@mui/material/TextField';
 
 interface LessonCardProps {
   auth: AuthPayload
@@ -44,15 +48,28 @@ const LessonCard: React.FC<LessonCardProps> = ({ auth, lesson, addStudentClass }
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [comment, setComment] = useState<string>("")
+  // init newDate val as Date.toString
+  const [newDate, setDate] = useState<string>(Date().toString());
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  // change date on input
+  const handleChangeDate = (date: Date | null) => {
+    try {
+      setDate(date ? date.toString() : "");
+    }
+    catch (err) {
+      console.error(err);
+    }
+  }
 
   const handleSubmit = async (e: FormSubmit) => {
     e.preventDefault();
     const data = {
       lesson: lesson,
       comment,
+      newDate
     }
     setLoading(true);
     await dispatch(createRollCallSession(data, auth, history, lessonDetail, lesson))
@@ -138,6 +155,21 @@ const LessonCard: React.FC<LessonCardProps> = ({ auth, lesson, addStudentClass }
             </Box>
           </Box>
           <form onSubmit={handleSubmit} className="rollcalsession__form">
+            {/* added date picker */}
+            <Box>
+              <div className="form-group">
+                <label htmlFor="name">Ngày điểm danh *</label>
+                <LocalizationProvider dateAdapter={DateAdapter} >
+                    <DesktopDatePicker
+                        inputFormat="dd/MM/yyyy"
+                        value={newDate}
+                        minDate={dayjs('2022').toDate()}
+                        onChange={handleChangeDate}
+                        renderInput={(params: any) => <TextField {...params} />}
+                    />
+                </LocalizationProvider>
+              </div>
+            </Box>
             <Box>
               <label htmlFor="comment">Mô tả buổi điểm danh </label>
               <textarea rows={4} cols={3}
@@ -153,7 +185,7 @@ const LessonCard: React.FC<LessonCardProps> = ({ auth, lesson, addStudentClass }
                   <Button onClick={handleClose} variant='contained' color='success' className={classes.Button}><p style={{ textTransform: "capitalize" }}>Đóng</p></Button>
                 </PrimaryTooltip>
               </Box>
-              <PrimaryTooltip title="Tạo khoá học">
+              <PrimaryTooltip title="Tạo buổi điểm danh">
                 <Button type="submit" variant='contained' className={classes.Button}>
                   {
                     loading ? <>
