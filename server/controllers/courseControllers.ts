@@ -90,6 +90,19 @@ class CourseController {
         }
     }
 
+    // Only allows guests to grab the id list of the courses
+    // does not include other infos like teachers, students, course names, etc.
+    async getCourses_guest(req: Request, res: Response) {
+        try {
+            const courses = await Course.find({}, {projection: {_id: 1}}).sort("-createdAt")
+
+            return res.json({ courses })
+
+        } catch (error: any) {
+            return res.status(500).json({ msg: error.message })
+        }
+    }
+
     async getcourseDetail(req: RequestUser, res: Response) {
         try {
             const { id } = req.params;
