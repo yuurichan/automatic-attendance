@@ -3,6 +3,8 @@ Automatic Attendance using Face Recognition website written in TS - making use o
 
 This project was taken over from a college senior. With most of the codes having been reworked along with ___major___ bug fixes, new features as well as overall improvements on user experiences.
 
+`(Note: This is also my first time working with everything listed above, as well as my first time working with a fullstack web application so some parts of the codes are not very optimized/clean)`
+
 ### New Features
 - (will be updated soon)
 
