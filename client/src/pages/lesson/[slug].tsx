@@ -166,7 +166,7 @@ const LessonDetail = () => {
                   lessonDetailStore.loading ? <Skeleton className={classes.SkeletonInline} height={22} variant="text" width={210} />
                     : <>
                       <i className='bx bxs-time'></i>
-                      <span>Thời gian bắt đầu:
+                      <span>Thời gian bắt đầu: 
                         {dayjs(lessonDetailState?.lesson?.timeStart).format("hh:mm a")}
                       </span>
                     </>
