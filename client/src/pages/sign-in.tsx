@@ -10,6 +10,7 @@ const SignIn = () => {
                     <img src={Logo} alt="logo" className="auth-page__form-logo" />
                     <h2 className="auth-page__form-title">Đăng Nhập</h2>
                     <p className="auth-page__form-detail">Bạn chưa có tài khoản? <Link to='/sign-up'>Đăng kí</Link></p>
+                    <p className="auth-page__form-detail-student">Bạn là sinh viên? <Link to='/student-file'>Nhập dữ liệu</Link></p>
                     <SignInForm />
                 </div>
             </div>
