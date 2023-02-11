@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 import { FormSubmit, InputChange, Params } from '../../utils/interface'
 import { RootStore, RollCallSession, Attendance } from '../../utils/interface'
@@ -97,11 +97,15 @@ const RollCallSessionDetail = () => {
 
     const [timers, setTimers] = useState<any>()
     const [studentCodeList, setStudentCodeList] = useState<any[]>()
+    const [isButtonAvailable, setButtonAvailable] = useState<boolean>(true)
     //const [isSessionEnd, setSessionEnd] = useState<boolean>(false)
 
     //test (this is used for the sake of re-rendering the attendance list)
     const [rerender, setRender] = useState<Number>(0);
     const forceUpdateRe = React.useReducer(() => ({}), {})[1] as () => void
+
+    const [, updateState] = useState<any>();
+    const forceUpdate = useCallback(() => updateState({}), []);
 
     // Ref
     const refCamera = useRef<any>(null);
@@ -109,6 +113,7 @@ const RollCallSessionDetail = () => {
 
     console.log('detailRollCallSession: ', detailRollCallSession);
     // this might be used to refresh and/or re-render components but it doesn't seem to work
+    // lí do có thể 2 luồng API đưa chi tiết và nhận chi tiết điểm danh chạy song song và khác nhau => trang ko nhận ra và rerender đc
     useEffect(() => {
         console.log('This is triggered');
         if (slug) {
@@ -216,6 +221,8 @@ const RollCallSessionDetail = () => {
             dispatch({ type: ALERT, payload: { loading: false } })
             dispatch({ type: ALERT, payload: { error: error.response.dât.msg } })
         }
+
+        setButtonAvailable(false);
     }
 
     const handleCloseDialog = () => {
@@ -368,6 +375,8 @@ const RollCallSessionDetail = () => {
                                 ...detailRollCallSession,
                                 attendanceDetails : newAttendanceDetails
                             })
+
+                            
                             
                             rerender === 0 ? setRender(1) : setRender(0)
                         } else {
@@ -615,7 +624,7 @@ const RollCallSessionDetail = () => {
                         {/* <p> Hiện chức năng đang phát triển!</p> */}
                         {/* Everything works data-wise, couldn't fix the visual part though */}
                         {
-                            !playing ? <Button variant='contained' onClick={handleOpenCamera}>
+                            !playing ? <Button variant='contained' onClick={handleOpenCamera} disabled={!isButtonAvailable}>
                                 <p className="button-text">Mở camera</p>
                             </Button> :
                                 <Button variant='contained' onClick={hanldeCloseCamera}>
@@ -693,6 +702,7 @@ const RollCallSessionDetail = () => {
                             </Table>
                         </TableContainer>
                     </div> : <TableContainer className={classes.TableContainer} component={Paper}>
+                            {/* Cho phép hiển thị nếu handmade === 0; THợp cần xem chi tiết điểm danh */}
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
