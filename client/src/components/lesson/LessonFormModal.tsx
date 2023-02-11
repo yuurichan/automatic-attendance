@@ -279,6 +279,9 @@ const LessonFormModal: React.FC<LessonFormModalProps> = ({ open, setOpen, onEdit
                                                         <p className="course__code">
                                                             {course.courseCode}
                                                         </p>
+                                                        <p className="course__code">
+                                                            Giảng viên: {course.teacher?.name}
+                                                        </p>
                                                         <span className="course__createAt">Ngày tạo: {dayjs(course.yearStart).format("DD - MM - YYYY")}</span>
                                                     </div>
                                                     <div className="row__item-use">
