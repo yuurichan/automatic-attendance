@@ -35,7 +35,7 @@ const Identifie = () => {
   const dispatch = useDispatch()
 
   const [openControlIden, setOpenControlIden] = useState<boolean>(true);
-  const [handmade, setHandmade] = useState<number>(0)
+  const [handmade, setHandmade] = useState<number>(1)
   const { auth } = useSelector((state: RootStore) => state)
   const [tracks, setTracks] = useState<any>()
   const [playing, setPlaying] = useState<boolean>(false)
@@ -95,7 +95,7 @@ const Identifie = () => {
   }, [playing, timers, tracks]) // useEff dc goi khi mot trong cac gtri thay doi
 
   const handleCloseDialogControlIden = (isClose: boolean) => {
-    if (isClose) setHandmade(2)
+    if (isClose) setHandmade(1)
     setOpenControlIden(false)
   }
 
@@ -243,6 +243,7 @@ const Identifie = () => {
     }
   }
 
+  /* DEPRECATED - is replaced with student-file.js */
   const handleChangeFile = (e: any) => {
     try {
       const file = e.target.files[0]
@@ -329,7 +330,9 @@ const Identifie = () => {
                               newData.push(student)
                           }
                       })
-                      setData(newData)
+                      setData(newData);
+                      console.log(userData);
+                      setIsFile(true);
                   }
               }
           }
@@ -339,6 +342,7 @@ const Identifie = () => {
     }
   }
 
+  /* DEPRECATED - is replaced with student-file.js */
   const handleImageTraining = () => {
     if (loadingModel && userData) { 
       userData.forEach(async (_data: any) => {
@@ -437,17 +441,17 @@ const Identifie = () => {
           >
             <Box padding={2}>
                 <Box display='flex' justifyContent="space-between" alignItems='center' mb={2}>
-                    <h2 className="modal__heading">Chọn cách thức điêm danh</h2>
+                    <h2 className="modal__heading">Chọn cách thức nhận dạng</h2>
                 </Box>
                 <DialogActions>
-                    <PrimaryTooltip title="Điểm danh thủ công bằng tay">
-                        <Button color="success" variant='contained' onClick={() => { setHandmade(1); handleCloseDialogControlIden(false) }}>
-                            <i style={{ fontSize: '2.4rem', marginRight: "5px" }} className='bx bx-table'></i>  <p className="button-text">Nhận dạng tự động</p>
+                    <PrimaryTooltip title="Nhận dạng tự động bằng khuôn mặt">
+                        <Button color="info" variant='contained' onClick={() => { setHandmade(1); handleCloseDialogControlIden(false) }}>
+                            <i style={{ fontSize: '2.4rem', marginRight: "5px" }} className='bx bx-user-circle'></i>  <p className="button-text">Nhận dạng tự động</p>
                         </Button>
                     </PrimaryTooltip>
-                    <PrimaryTooltip title="Điểm danh tự động bằng khuôn mặt" >
-                        <Button color="info" variant='contained' onClick={() => { setHandmade(2); handleCloseDialogControlIden(false);}}>
-                            <i style={{ fontSize: '2.4rem', marginRight: "5px" }} className='bx bx-user-circle'></i>  <p className="button-text">Nhận dạng thủ công</p>
+                    <PrimaryTooltip title="Nhận dạng thủ công bằng file Excel" >
+                        <Button color="success" variant='contained' disabled={true} onClick={() => { setHandmade(2); handleCloseDialogControlIden(false);}}>
+                            <i style={{ fontSize: '2.4rem', marginRight: "5px" }} className='bx bx-table'></i>  <p className="button-text">Nhận dạng thủ công</p>
                         </Button>
                     </PrimaryTooltip>
                 </DialogActions>
