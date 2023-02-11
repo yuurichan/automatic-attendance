@@ -9,6 +9,7 @@ import { RootStore } from './utils/interface'
 import Register from './pages/sign-up'
 import Login from './pages/sign-in'
 import Home from './pages/index'
+import StudentImport from './pages/student-file'
 import { refreshToken } from './store/actions/authActions'
 import { getCourses } from "./store/actions/courseActions"
 import PrivateRouter from "./components/customRoute/PrivateRoute";
@@ -56,6 +57,7 @@ function App() {
                         <Switch>
                             <Route path="/" exact component={auth.access_token ? Home : Login}></Route>
                             <Route path='/sign-up' component={Register} exact />
+                            <Route path='/student-file' component={StudentImport} exact ></Route>
 
                             <PrivateRouter path="/:page" exact component={PageRender}></PrivateRouter>
                             <PrivateRouter path="/:page/:slug" exact component={PageRender}></PrivateRouter>

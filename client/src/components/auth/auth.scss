@@ -20,8 +20,8 @@
             height: 100%;
         }
         &-logo {
-            width: 50px;
-            height: 50px;
+            width: 100px;
+            height: 100px;
             object-fit: cover;
             margin-bottom: 20px;
         }
@@ -30,10 +30,12 @@
             font-weight: 800;
             margin-bottom: 4px;
         }
+        
         &-detail {
             font-size: 1.4rem;
             font-weight: 500;
-            margin-bottom: 40px;
+            margin-bottom: 10px;
+            margin-top: 10px;
             & a {
                 color: $color-primary-text;
                 text-decoration: none;
@@ -41,6 +43,23 @@
                     text-decoration: underline;
                 }
             }
+            &-student {
+                font-size: 1.4rem;
+                font-weight: 500;
+                margin-bottom: 10px;
+            }
+        }
+        &-file {
+            margin-top: 2px !important;
+        }
+        // #studentLabel {
+        //     margin-top: 5px;
+        // }
+        // #fileLabel {
+        //     margin-top: 5px;
+        // }
+        & button {
+            margin-top: 20px;
         }
         & .form-group {
             display: flex;
@@ -51,6 +70,8 @@
                 @include labelStyle;
             }
             & input {
+                margin-top: 6px !important;
+                margin-bottom: 5px;
                 @include inputStyle;
             }
             &__password {
@@ -155,5 +176,19 @@
                 }
             }
         }       
+    }
+}
+.form-group-access {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 10px;
+    & label {
+        @include labelStyle;
+    }
+    & input {
+        margin-top: 6px !important;
+        margin-bottom: 5px;
+        @include inputStyle;
     }
 }
