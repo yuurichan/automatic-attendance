@@ -250,6 +250,7 @@ const StudentUpload = () => {
                         <input id="studentAccessCode"
                             value={accessCode}
                             onChange={handleAccessCodeChange}
+                            disabled={idList?.length === 0 || idList === undefined}
                             type="text" placeholder='Vui lòng nhập mã...' name='accessCode' />
                     </div>
                 </DialogActions>
