@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "ts-node-dev server/index.ts",
+    "start": "node server/index.js",
     "build": "npm install && tsc"
   },
   "author": "",
