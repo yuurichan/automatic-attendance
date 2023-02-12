@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "ts-node-dev server/index.ts",
-    "build": "tsc"
+    "build": "npm install && tsc"
   },
   "author": "",
   "license": "ISC",
