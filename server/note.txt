@@ -1,0 +1,7 @@
+deleted "type":"module" since in tsconfig we're exporting from "target":"es6/2016" to "module":"commonjs".
+and we don't want  to use ES6 Module syntax to read CommonJS files
+
+this link really helped (the last section to be more specific):
+https://bobbyhadz.com/blog/typescript-uncaught-referenceerror-exports-is-not-defined
+
+we're compiling TS in ES6 syntax to CommonJS
