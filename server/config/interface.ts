@@ -50,4 +50,5 @@ export interface IStudent extends Document {
 
 export interface ILabledFaceDescriptor extends Document {
     label?: string
+    descriptors: [[number]]
 }
