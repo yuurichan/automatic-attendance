@@ -7,6 +7,7 @@ const LabledFaceDescriptorScheme = new mongoose.Schema({
         type: String,
         trim: true
     },
+    descriptors: [[Number]]
 }, {
     timestamps: true
 })
