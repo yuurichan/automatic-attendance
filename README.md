@@ -17,9 +17,8 @@ This project was taken over from a college senior. With most of the codes having
 - Deployment is currently not possible since this is purely a development build. Its only purpose is for experimenting. 
 
 <b>(Deployment builds are in seperate repositories. You can check them out here:
-
-  https://github.com/yuurichan/automatic-attendance-ui
-  https://github.com/yuurichan/automatic-attendance-api)</b>
+  - https://github.com/yuurichan/automatic-attendance-ui
+  - https://github.com/yuurichan/automatic-attendance-api)</b>
 
 ### Installation:
 #### will be updated soon
